@@ -35,13 +35,55 @@ namespace obrabotka
         {
             var g = e.Graphics;
             g.Clear(Color.White);
-          foreach(var obj in objects)
+          foreach(var obj in objects.ToList())
             {
+                if(obj != player && player.Overlaps(obj, g))
+                {
+                    txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
+                }
+                if(obj == marker)
+                {
+                    objects.Remove(marker);
+                    marker = null;
+                }
                 g.Transform = obj.GetTransform();
                 obj.Render(g);
             }
-            g.Transform = myRect.GetTransform();
-            myRect.Render(g);
+            
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (marker != null)
+            {
+                float dx = marker.X - player.X;
+                float dy = marker.Y - player.Y;
+
+                float lenght = MathF.Sqrt(dx * dx + dy * dy);
+                dx /= lenght;
+                dy /= lenght;
+
+                player.X += dx * 2;
+                player.Y += dy * 2;
+
+            }
+            pbMain.Invalidate();
+        }
+
+        private void pbMain_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (marker == null)
+            {
+                marker = new Marker(0, 0, 0);
+                objects.Add(marker); 
+            } 
+            marker.X = e.X;
+            marker.Y = e.Y;
+        }
+
+        private void pbMain_Click(object sender, EventArgs e)
+        {
 
         }
     }
