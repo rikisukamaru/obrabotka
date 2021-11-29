@@ -14,6 +14,7 @@ namespace obrabotka.Objects
         {
         }
         public Action<Marker> onMarkerOverlap;
+        public Action<Krug> onKrugOverlap;
         public override void Render(Graphics g)
         {
             g.FillEllipse(new SolidBrush(Color.DeepSkyBlue), -20, -20, 40, 40);
@@ -34,6 +35,10 @@ namespace obrabotka.Objects
             if(obj is Marker)
             {
                 onMarkerOverlap(obj as Marker);
+            }
+            else if(obj is Krug krug)
+            {
+                onKrugOverlap.Invoke(krug);
             }
         }
 

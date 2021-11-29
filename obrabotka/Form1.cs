@@ -14,10 +14,14 @@ namespace obrabotka
 {
     public partial class Form1 : Form
     {
-        MyRectangle myRect;
+       
         List<BaseObject> objects = new List<BaseObject>();
         Player player;
         Marker marker;
+        Krug krug;
+        Krug krug1;
+        int ochko = 0;
+        Random r = new Random();
         public Form1()
         {
             InitializeComponent();
@@ -32,19 +36,42 @@ namespace obrabotka
                 objects.Remove(m);
                 marker = null;
             };
+            player.onKrugOverlap += (m) =>
+            {
+                GenerateCircle(m);
+              
+                ochko++;
+                label1.Text = $"Счёт: "+ochko;
+            };
             marker  = new Marker(pbMain.Width / 2+50, pbMain.Height / 2+50, 0);
+          
+       
+
+          //i lublu bebru
+          
+            krug = new Krug(0, 0,0);
+            GenerateCircle(krug);
+            krug1 = new Krug(0, 0, 0);
+            GenerateCircle(krug1);
+            objects.Add(krug);
+            objects.Add(krug1);
             objects.Add(marker);
             objects.Add(player);
 
-            myRect = new MyRectangle(100, 100, 45);
-            objects.Add(new MyRectangle(50, 50, 0));
-            objects.Add(new MyRectangle(100, 100, 45));
         }
 
+        private void GenerateCircle(Krug сircle)
+        {
+            Random random = new Random();
+            сircle.X = random.Next() % 780 + 40;
+            сircle.Y = random.Next() % 380 + 40;
+
+        }
         private void pbMain_Paint(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
             g.Clear(Color.White);
+            peredvig();
             // пересчитываем пересечения
             foreach (var obj in objects.ToList())
             {
@@ -52,6 +79,12 @@ namespace obrabotka
                 {
                     player.Overlap(obj);
                     obj.Overlap(player);
+                }
+                if (obj != krug && krug.Overlaps(obj, g))
+                {
+                    krug.Overlap(obj);
+                    obj.Overlap(krug);
+                    
                 }
             }
 
@@ -63,8 +96,7 @@ namespace obrabotka
             }
 
         }
-
-        private void timer1_Tick(object sender, EventArgs e)
+        private void peredvig()
         {
             if (marker != null)
             {
@@ -86,6 +118,10 @@ namespace obrabotka
             // пересчет позиция игрока с помощью вектора скорости
             player.X += player.vX;
             player.Y += player.vY;
+        }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+           
             pbMain.Invalidate();
         }
 
