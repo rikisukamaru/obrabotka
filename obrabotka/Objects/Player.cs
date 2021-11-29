@@ -9,10 +9,11 @@ namespace obrabotka.Objects
 {
      class Player : BaseObject
     {
+        public float vX, vY;
         public Player(float x,float y, float angle) : base(x,y,angle)
         {
         }
-
+        public Action<Marker> onMarkerOverlap;
         public override void Render(Graphics g)
         {
             g.FillEllipse(new SolidBrush(Color.DeepSkyBlue), -20, -20, 40, 40);
@@ -27,7 +28,14 @@ namespace obrabotka.Objects
             return path;
 
         }
-
+        public override void  Overlap(BaseObject obj)
+        {
+            base.Overlap(obj);
+            if(obj is Marker)
+            {
+                onMarkerOverlap(obj as Marker);
+            }
+        }
 
     }
 }

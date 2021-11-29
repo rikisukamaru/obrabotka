@@ -22,7 +22,7 @@ namespace obrabotka.Objects
             Y = y;
             Angle = angle;
         }
-
+        public Action<BaseObject, BaseObject> onOverlap;
         public Matrix GetTransform()
         {
             var matrix = new Matrix();
@@ -54,6 +54,14 @@ namespace obrabotka.Objects
             var region = new Region(path1);
             region.Intersect(path2); // пересекаем формы
             return !region.IsEmpty(g); // если полученная форма не пуста то значит было пересечение
+        }
+
+        public virtual void Overlap(BaseObject obj)
+        {
+            if(this.onOverlap!= null)
+            {
+                this.onOverlap(this, obj);
+            }
         }
     }
 }

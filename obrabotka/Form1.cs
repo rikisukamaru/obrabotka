@@ -21,7 +21,17 @@ namespace obrabotka
         public Form1()
         {
             InitializeComponent();
-            player = new Player(pbMain.Width / 2, pbMain.Height/2,0);
+            player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0);
+            // добавляю реакцию на пересечение
+            player.onOverlap += (p, obj) =>
+            {
+                txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
+            };
+            player.onMarkerOverlap += (m) =>
+            {
+                objects.Remove(m);
+                marker = null;
+            };
             marker  = new Marker(pbMain.Width / 2+50, pbMain.Height / 2+50, 0);
             objects.Add(marker);
             objects.Add(player);
@@ -35,21 +45,22 @@ namespace obrabotka
         {
             var g = e.Graphics;
             g.Clear(Color.White);
-          foreach(var obj in objects.ToList())
+            // пересчитываем пересечения
+            foreach (var obj in objects.ToList())
             {
-                if(obj != player && player.Overlaps(obj, g))
+                if (obj != player && player.Overlaps(obj, g))
                 {
-                    txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
+                    player.Overlap(obj);
+                    obj.Overlap(player);
                 }
-                if(obj == marker)
-                {
-                    objects.Remove(marker);
-                    marker = null;
-                }
+            }
+
+            // рендерим объекты
+            foreach (var obj in objects)
+            {
                 g.Transform = obj.GetTransform();
                 obj.Render(g);
             }
-            
 
         }
 
@@ -64,20 +75,27 @@ namespace obrabotka
                 dx /= lenght;
                 dy /= lenght;
 
-                player.X += dx * 2;
-                player.Y += dy * 2;
+                player.vX += dx * 0.5f;
+                player.vY += dy * 0.5f;
+                player.Angle = 90 - MathF.Atan2(player.vX, player.vY) * 180 / MathF.PI;
 
             }
+            player.vX += -player.vX * 0.1f;
+            player.vY += -player.vY * 0.1f;
+
+            // пересчет позиция игрока с помощью вектора скорости
+            player.X += player.vX;
+            player.Y += player.vY;
             pbMain.Invalidate();
         }
 
         private void pbMain_MouseClick(object sender, MouseEventArgs e)
         {
-            if (marker == null)
+           if (marker == null)
             {
-                marker = new Marker(0, 0, 0);
+               marker = new Marker(0, 0, 0);
                 objects.Add(marker); 
-            } 
+           } 
             marker.X = e.X;
             marker.Y = e.Y;
         }
