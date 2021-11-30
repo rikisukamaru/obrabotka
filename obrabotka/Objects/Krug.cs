@@ -17,10 +17,10 @@ namespace obrabotka.Objects
         public override void Render(Graphics g)
         {
             g.FillEllipse(new SolidBrush(Color.Aquamarine), -20, -20, 40, 40);
-            g.DrawString(
-     "Текст",
-     new Font("Verdana", 8), new SolidBrush(Color.Green),  10, 10 );
+             
+           
         }
+
         public override GraphicsPath GetGraphicsPath()
         {
 

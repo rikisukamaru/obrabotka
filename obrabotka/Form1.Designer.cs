@@ -34,16 +34,19 @@ namespace obrabotka
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.txtLog = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.SuspendLayout();
             // 
             // pbMain
             // 
+            this.pbMain.BackColor = System.Drawing.Color.White;
             this.pbMain.Location = new System.Drawing.Point(1, 2);
             this.pbMain.Name = "pbMain";
-            this.pbMain.Size = new System.Drawing.Size(849, 395);
+            this.pbMain.Size = new System.Drawing.Size(688, 395);
             this.pbMain.TabIndex = 0;
             this.pbMain.TabStop = false;
+            this.pbMain.Click += new System.EventHandler(this.pbMain_Click_1);
             this.pbMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pbMain_Paint);
             this.pbMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbMain_MouseClick);
             // 
@@ -55,7 +58,7 @@ namespace obrabotka
             // 
             // txtLog
             // 
-            this.txtLog.Location = new System.Drawing.Point(856, 1);
+            this.txtLog.Location = new System.Drawing.Point(686, 2);
             this.txtLog.Name = "txtLog";
             this.txtLog.Size = new System.Drawing.Size(200, 396);
             this.txtLog.TabIndex = 1;
@@ -64,17 +67,22 @@ namespace obrabotka
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(767, 4);
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(609, 5);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 20);
             this.label1.TabIndex = 2;
             this.label1.Text = "Счёт: 0";
             // 
+            // timer2
+            // 
+            this.timer2.Interval = 480;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1053, 397);
+            this.ClientSize = new System.Drawing.Size(885, 397);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.pbMain);
@@ -92,6 +100,7 @@ namespace obrabotka
         private System.Windows.Forms.RichTextBox txtLog;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Timer timer2;
     }
 }
 

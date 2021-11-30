@@ -39,9 +39,10 @@ namespace obrabotka
             player.onKrugOverlap += (m) =>
             {
                 GenerateCircle(m);
-              
+               // Timer();
                 ochko++;
                 label1.Text = $"Счёт: "+ochko;
+
             };
             marker  = new Marker(pbMain.Width / 2+50, pbMain.Height / 2+50, 0);
           
@@ -59,12 +60,21 @@ namespace obrabotka
             objects.Add(player);
 
         }
+        private void Timer(Graphics g)
+        {
 
+            //реализаия таймера 
+            while (timer2.Interval != 0)
+            {
+
+                g.DrawString(timer2.ToString(), new Font("Verdana", 8), new SolidBrush(Color.Green), 10, 10);
+            }
+        }
         private void GenerateCircle(Krug сircle)
         {
             Random random = new Random();
-            сircle.X = random.Next() % 780 + 40;
-            сircle.Y = random.Next() % 380 + 40;
+            сircle.X = random.Next() % 620 + 40;
+            сircle.Y = random.Next() % 340 + 40;
 
         }
         private void pbMain_Paint(object sender, PaintEventArgs e)
@@ -80,12 +90,7 @@ namespace obrabotka
                     player.Overlap(obj);
                     obj.Overlap(player);
                 }
-                if (obj != krug && krug.Overlaps(obj, g))
-                {
-                    krug.Overlap(obj);
-                    obj.Overlap(krug);
-                    
-                }
+               
             }
 
             // рендерим объекты
@@ -107,8 +112,8 @@ namespace obrabotka
                 dx /= lenght;
                 dy /= lenght;
 
-                player.vX += dx * 0.5f;
-                player.vY += dy * 0.5f;
+                player.vX += dx * 0.7f;
+                player.vY += dy * 0.7f;
                 player.Angle = 90 - MathF.Atan2(player.vX, player.vY) * 180 / MathF.PI;
 
             }
@@ -137,6 +142,11 @@ namespace obrabotka
         }
 
         private void pbMain_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pbMain_Click_1(object sender, EventArgs e)
         {
 
         }
