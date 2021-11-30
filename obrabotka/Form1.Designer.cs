@@ -34,7 +34,6 @@ namespace obrabotka
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.txtLog = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.SuspendLayout();
             // 
@@ -74,18 +73,18 @@ namespace obrabotka
             this.label1.TabIndex = 2;
             this.label1.Text = "Счёт: 0";
             // 
-            // timer2
-            // 
-            this.timer2.Interval = 480;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(885, 397);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.pbMain);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(903, 444);
+            this.MinimumSize = new System.Drawing.Size(903, 444);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
@@ -100,7 +99,6 @@ namespace obrabotka
         private System.Windows.Forms.RichTextBox txtLog;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.Timer timer2;
     }
 }
 

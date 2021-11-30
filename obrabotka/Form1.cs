@@ -39,7 +39,7 @@ namespace obrabotka
             player.onKrugOverlap += (m) =>
             {
                 GenerateCircle(m);
-               // Timer();
+               
                 ochko++;
                 label1.Text = $"Счёт: "+ochko;
 
@@ -60,21 +60,12 @@ namespace obrabotka
             objects.Add(player);
 
         }
-        private void Timer(Graphics g)
-        {
-
-            //реализаия таймера 
-            while (timer2.Interval != 0)
-            {
-
-                g.DrawString(timer2.ToString(), new Font("Verdana", 8), new SolidBrush(Color.Green), 10, 10);
-            }
-        }
+       
         private void GenerateCircle(Krug сircle)
         {
             Random random = new Random();
-            сircle.X = random.Next() % 620 + 40;
-            сircle.Y = random.Next() % 340 + 40;
+            сircle.X = random.Next() % 600 + 40;
+            сircle.Y = random.Next() % 300 + 40;
 
         }
         private void pbMain_Paint(object sender, PaintEventArgs e)
@@ -112,8 +103,8 @@ namespace obrabotka
                 dx /= lenght;
                 dy /= lenght;
 
-                player.vX += dx * 0.7f;
-                player.vY += dy * 0.7f;
+                player.vX += dx * 0.8f;
+                player.vY += dy * 0.8f;
                 player.Angle = 90 - MathF.Atan2(player.vX, player.vY) * 180 / MathF.PI;
 
             }
@@ -126,7 +117,20 @@ namespace obrabotka
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-           
+            foreach (var obj in objects.ToList())
+            {
+                if (obj is Krug krug)
+                {
+                    krug.time--;
+
+                    if (krug.time <= 0)
+                    {
+                        GenerateCircle(krug);
+                        krug.time = 130 + r.Next() % 70;
+                    }
+                }
+
+            }
             pbMain.Invalidate();
         }
 
